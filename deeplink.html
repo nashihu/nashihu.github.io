@@ -1,0 +1,58 @@
+<html>
+
+<body>
+	<script>
+		var urlParams=new URLSearchParams(window.location.search);
+		var androidAppView="";var iosAppView="";
+		var urlType=urlParams.get("type");
+		var idItem=urlParams.get("id");
+		if(idItem==null) {
+				idItem=urlParams.get("bac");
+			}
+			
+		var playStoreUrl="http://play.google.com/store/apps/details?id=123";
+		var appStoreUrl="https://www.apple.com/ios/app-store/";
+		if(urlType===null||idItem===null) {
+				androidAppView=playStoreUrl;
+				iosAppView=appStoreUrl;
+			} else if(urlType=="usedCar") {
+				androidAppView="meta://main/id="+idItem;
+				iosAppView="partnerAppIos://usedcar?id="+idItem;
+			} else if(urlType=="dealer"){
+				androidAppView="meta://main/id="+idItem;
+				iosAppView="meta://main/id="+idItem;
+			} else if(urlType=="usedCarPilex"){
+				androidAppView="meta://main/id="+idItem;
+				iosAppView="partnerAppIos://usedcarpilex?id="+idItem;
+			}
+
+		window.onload=function checkOSAndRedirect(){
+			var userAgent=window.navigator.userAgent,platform=window.navigator.platform,macosPlatforms=['Macintosh','MacIntel','MacPPC','Mac68K'],windowsPlatforms=['Win32','Win64','Windows','WinCE'],iosPlatforms=['iPhone','iPad','iPod'],os=null;
+			if(macosPlatforms.indexOf(platform)!==-1){
+				os='Mac';
+			}else if(iosPlatforms.indexOf(platform)!==-1){
+				os='iOS';
+			}else if(windowsPlatforms.indexOf(platform)!==-1){
+				os='Windows';
+			}else if(/Android/.test(userAgent)){
+				os='Android';
+			}else if(!os&&/Linux/.test(platform)){
+				os='Linux';
+			}
+
+			if(os=="Windows"||os=="Android"||os=="Linux"){
+				setTimeout(
+					function(){
+						window.location=playStoreUrl;}
+						,6000);
+				window.location=androidAppView;
+			} else if(os=="iOS"||os=="Mac"){
+				setTimeout(
+					function(){
+						window.location=appStoreUrl;},6000);
+				window.location=iosAppView;
+			}}
+	</script>
+</body>
+
+</html>

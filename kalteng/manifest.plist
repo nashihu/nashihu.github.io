@@ -11,19 +11,19 @@
 					<key>kind</key>
 					<string>software-package</string>
 					<key>url</key>
-					<string>https://raw.githubusercontent.com/nashihu/production_stuff/refs/heads/master/kalteng/app.ipa</string>
+					<string>https://nashihu.github.io/kalteng/app.ipa</string>
 				</dict>
 				<dict>
 					<key>kind</key>
 					<string>display-image</string>
 					<key>url</key>
-					<string>https://raw.githubusercontent.com/nashihu/production_stuff/refs/heads/master/kalteng/image.57x57.jpg</string>
+					<string>https://nashihu.github.io/kalteng/image.512x512.jpg</string>
 				</dict>
 				<dict>
 					<key>kind</key>
 					<string>full-size-image</string>
 					<key>url</key>
-					<string>https://raw.githubusercontent.com/nashihu/production_stuff/refs/heads/master/kalteng/image.512x512.jpg</string>
+					<string>https://nashihu.github.io/kalteng/image.512x512.jpg</string>
 				</dict>
 			</array>
 			<key>metadata</key>
@@ -37,7 +37,7 @@
 				<key>platform-identifier</key>
 				<string>com.apple.platform.iphoneos</string>
 				<key>title</key>
-				<string>Kalvacy</string>
+				<string>Anonvacy</string>
 			</dict>
 		</dict>
 	</array>

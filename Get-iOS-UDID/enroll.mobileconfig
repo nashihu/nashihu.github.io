@@ -4,8 +4,12 @@
     <dict>
         <key>PayloadContent</key>
         <dict>
+            <key>PayloadType</key>
+            <string>com.apple.security.mobileprofile</string>
             <key>URL</key>
-            <string>nashihu.github.io/Get-iOS-UDID/done.php</string>
+            <string>https://nashihu.github.io/Get-iOS-UDID/done.php</string>
+            <key>PayloadUUID</key>
+            <string>D84C2DBF-2E70-4D91-A55A-4AB4D56C6E5A</string>
             <key>DeviceAttributes</key>
             <array>
             <string>DEVICE_NAME</string>
@@ -16,9 +20,9 @@
             </array>
         </dict>
         <key>PayloadOrganization</key>
-        <string>bukan org, cuma personal</string>
+        <string>Ahmad N</string>
         <key>PayloadDisplayName</key>
-        <string>Profile Service</string>
+        <string>Get UDID</string>
         <key>PayloadVersion</key>
         <integer>1</integer>
         <key>PayloadUUID</key>
@@ -28,6 +32,6 @@
         <key>PayloadDescription</key>
         <string>ini tools utk cek udid iphone</string>
         <key>PayloadType</key>
-        <string>Profile Service</string>
+        <string>com.apple.security.mobileprofile</string>
     </dict>
 </plist>

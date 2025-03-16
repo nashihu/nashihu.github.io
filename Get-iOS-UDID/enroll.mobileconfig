@@ -16,7 +16,7 @@
             </array>
         </dict>
         <key>PayloadOrganization</key>
-        <string>example</string>
+        <string>bukan org, cuma personal</string>
         <key>PayloadDisplayName</key>
         <string>Profile Service</string>
         <key>PayloadVersion</key>
@@ -24,9 +24,9 @@
         <key>PayloadUUID</key>
         <string>D84C2DBF-2E70-4D91-A55A-4AB4D56C6E5A</string>
         <key>PayloadIdentifier</key>
-        <string>example.com</string>
+        <string>nashihu.github.io</string>
         <key>PayloadDescription</key>
-        <string>example</string>
+        <string>ini tools utk cek udid iphone</string>
         <key>PayloadType</key>
         <string>Profile Service</string>
     </dict>

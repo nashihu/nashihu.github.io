@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Processing Device Info</title>
+    <script>
+        window.onload = function() {
+            // Get the XML data from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const xmlData = urlParams.get('data');
+            
+            if (xmlData) {
+                // Parse the XML
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlData, "text/xml");
+                
+                // Extract device information
+                const deviceInfo = {
+                    UDID: xmlDoc.querySelector('UDID')?.textContent || '',
+                    DEVICE_NAME: xmlDoc.querySelector('DEVICE_NAME')?.textContent || '',
+                    PRODUCT: xmlDoc.querySelector('PRODUCT')?.textContent || '',
+                    VERSION: xmlDoc.querySelector('VERSION')?.textContent || '',
+                    CHALLENGE: xmlDoc.querySelector('CHALLENGE')?.textContent || ''
+                };
+
+                // Redirect to complete page with parameters
+                const params = new URLSearchParams(deviceInfo).toString();
+                window.location.href = '/Get-iOS-UDID/complete?' + params;
+            }
+        }
+    </script>
+</head>
+<body>
+    <p>Processing device information...</p>
+</body>
+</html>

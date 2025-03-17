@@ -10,21 +10,21 @@ exports.handler = async (event, context) => {
   try {
     const xmlData = event.body;
     
+    // Parse the XML using a server-side XML parser
+    const DOMParser = require('xmldom').DOMParser;
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlData, "text/xml");
+
+    console.log(`parsed ${xmlDoc}`);
+    
     // Validate that it's a plist
-    if (!xmlData.includes('<?xml version="1.0"') || !xmlData.includes('</plist>')) {
+    if (!xmlDoc.getElementsByTagName('plist').length) {
       console.log(`it's 400`);
       return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Invalid plist format' })
       };
     }
-    
-    // Parse the XML using a server-side XML parser
-    const DOMParser = require('xmldom').DOMParser;
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlData, "text/xml");
-
-    console.log(`parsed ${xmlDoc}`)
     
     // Extract device information
     const deviceInfo = {

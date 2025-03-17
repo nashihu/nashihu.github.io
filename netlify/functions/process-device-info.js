@@ -8,6 +8,7 @@ exports.handler = async (event, context) => {
 
   try {
     const xmlData = event.body;
+    console.log(`we got xml? ${xml}`)
     
     // Parse the XML using a server-side XML parser
     const DOMParser = require('xmldom').DOMParser;

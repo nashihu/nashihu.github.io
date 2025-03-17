@@ -8,12 +8,13 @@ exports.handler = async (event, context) => {
 
   try {
     const xmlData = event.body;
-    console.log(`we got xml? ${xmlData}`)
     
     // Parse the XML using a server-side XML parser
     const DOMParser = require('xmldom').DOMParser;
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlData, "text/xml");
+
+    console.log(`parsed ${xmlDoc}`)
     
     // Extract device information
     const deviceInfo = {

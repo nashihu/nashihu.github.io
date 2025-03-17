@@ -1,0 +1,17 @@
+[build]
+  publish = "."
+  command = "# no build command needed"
+
+[dev]
+  framework = "#static"
+  targetPort = 8888
+
+[[redirects]]
+  from = "/"
+  to = "/Get-iOS-UDID/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

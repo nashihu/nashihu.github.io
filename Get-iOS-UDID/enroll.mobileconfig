@@ -6,6 +6,8 @@
     <dict>
         <key>URL</key>
         <string>https://nashihu.github.io/Get-iOS-UDID/done.html</string>
+        <key>Method</key>
+        <string>GET</string>
         <key>DeviceAttributes</key>
         <array>
             <string>UDID</string>

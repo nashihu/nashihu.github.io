@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-    <key>PayloadContent</key>
     <dict>
-        <key>URL</key>
-        <string>https://ahmad-nashihuddien.netlify.app/Get-iOS-UDID/done.html</string>
-        <key>Method</key>
-        <string>GET</string>
-        <key>DeviceAttributes</key>
-        <array>
-            <string>UDID</string>
-            <string>IMEI</string>
-            <string>ICCID</string>
-            <string>VERSION</string>
-            <string>PRODUCT</string>
-        </array>
+        <key>PayloadContent</key>
+        <dict>
+            <key>URL</key>
+            <string>https://ahmad-nashihuddien.netlify.app/get-ios-udid/done</string>
+            <key>DeviceAttributes</key>
+            <array>
+                <string>UDID</string>
+                <string>DEVICE_NAME</string>
+                <string>VERSION</string>
+                <string>PRODUCT</string>
+            </array>
+        </dict>
+        <key>PayloadOrganization</key>
+        <string>UDID Service</string>
+        <key>PayloadDisplayName</key>
+        <string>iOS UDID Profile</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+        <key>PayloadUUID</key>
+        <string>3C4DC7D7-4648-4C7F-81F6-7C8A8E95E2E3</string>
+        <key>PayloadIdentifier</key>
+        <string>com.nashihu.github.io.udid</string>
+        <key>PayloadDescription</key>
+        <string>This profile will help retrieve your device UDID and other information.</string>
+        <key>PayloadType</key>
+        <string>Profile Service</string>
     </dict>
-    <key>PayloadOrganization</key>
-    <string>MortLabs.co.id</string>
-    <key>PayloadDisplayName</key>
-    <string>Profile Service</string>
-    <key>PayloadVersion</key>
-    <integer>1</integer>
-    <key>PayloadUUID</key>
-    <string>878FA802-01FB-4433-83DB-A1238B28C985</string>
-    <key>PayloadIdentifier</key>
-    <string>co.id.mortlabs.profile-service</string>
-    <key>PayloadDescription</key>
-    <string>This temporary profile will be used to find and display your current device's UDID.</string>
-    <key>PayloadType</key>
-    <string>Profile Service</string>
-</dict>
 </plist>

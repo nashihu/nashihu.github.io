@@ -8,8 +8,18 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const xmlData = event.body;
+    const encodedData = event.body;
     
+    // Decode Base64
+    const decodedData = Buffer.from(encodedData, 'base64').toString();
+    
+    // Find the plist content
+    const plistBegin = '<?xml version="1.0"';
+    const plistEnd = '</plist>';
+    const startIndex = decodedData.indexOf(plistBegin);
+    const endIndex = decodedData.indexOf(plistEnd) + plistEnd.length;
+    const xmlData = decodedData.substring(startIndex, endIndex);
+
     // Parse the XML using a server-side XML parser
     const DOMParser = require('xmldom').DOMParser;
     const parser = new DOMParser();

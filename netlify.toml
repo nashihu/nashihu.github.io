@@ -12,6 +12,18 @@
   status = 200
 
 [[redirects]]
+  from = "/get-ios-udid/*"
+  to = "/Get-iOS-UDID/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/Get-iOS-UDID/*"
+  to = "/Get-iOS-UDID/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200

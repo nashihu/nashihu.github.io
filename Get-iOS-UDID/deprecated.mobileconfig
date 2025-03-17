@@ -1,35 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-    <key>PayloadContent</key>
     <dict>
-        <key>URL</key>
-        <string>https://ahmad-nashihuddien.netlify.app/Get-iOS-UDID/done.html</string>
-        <key>Method</key>
-        <string>GET</string>
-        <key>DeviceAttributes</key>
-        <array>
-            <string>UDID</string>
-            <string>IMEI</string>
-            <string>ICCID</string>
-            <string>VERSION</string>
-            <string>PRODUCT</string>
-        </array>
+        <key>CHALLENGE</key>
+        <string>1234567890</string>
+        <key>DEVICE_NAME</key>
+        <string>John's iPhone</string>
+        <key>PRODUCT</key>
+        <string>iPhone13,2</string>
+        <key>UDID</key>
+        <string>12345678-1234-1234-1234-123456789012</string>
+        <key>VERSION</key>
+        <string>16.5</string>
     </dict>
-    <key>PayloadOrganization</key>
-    <string>MortLabs.co.id</string>
-    <key>PayloadDisplayName</key>
-    <string>Profile Service</string>
-    <key>PayloadVersion</key>
-    <integer>1</integer>
-    <key>PayloadUUID</key>
-    <string>878FA802-01FB-4433-83DB-A1238B28C985</string>
-    <key>PayloadIdentifier</key>
-    <string>co.id.mortlabs.profile-service</string>
-    <key>PayloadDescription</key>
-    <string>This temporary profile will be used to find and display your current device's UDID.</string>
-    <key>PayloadType</key>
-    <string>Profile Service</string>
-</dict>
 </plist>

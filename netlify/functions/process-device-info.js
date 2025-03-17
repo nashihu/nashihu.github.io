@@ -8,28 +8,14 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const encodedData = event.body;
+    // Instead of dealing with base64, directly use the XML data from the request
+    const xmlData = event.body;
     
-    // Decode Base64
-    const decodedData = Buffer.from(encodedData, 'base64').toString();
-    
-    // Find the plist content
-    const plistBegin = '<?xml version="1.0"';
-    const plistEnd = '</plist>';
-    const startIndex = decodedData.indexOf(plistBegin);
-    const endIndex = decodedData.indexOf(plistEnd) + plistEnd.length;
-    const xmlData = decodedData.substring(startIndex, endIndex);
-
     // Parse the XML using a server-side XML parser
     const DOMParser = require('xmldom').DOMParser;
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlData, "text/xml");
 
-    console.log("mau console.log")
-    console.log(`parsed ${xmlDoc}`);
-    console.log(xmlDoc);
-    console.log("done");
-    
     // Validate that it's a plist
     if (!xmlDoc.getElementsByTagName('plist').length) {
       console.log(`it's 400`);
@@ -40,13 +26,29 @@ exports.handler = async (event, context) => {
     }
     
     // Extract device information
-    const deviceInfo = {
-      UDID: xmlDoc.getElementsByTagName('UDID')[0]?.textContent || '',
-      DEVICE_NAME: xmlDoc.getElementsByTagName('DEVICE_NAME')[0]?.textContent || '',
-      PRODUCT: xmlDoc.getElementsByTagName('PRODUCT')[0]?.textContent || '',
-      VERSION: xmlDoc.getElementsByTagName('VERSION')[0]?.textContent || '',
-      CHALLENGE: xmlDoc.getElementsByTagName('CHALLENGE')[0]?.textContent || ''
+    const dict = xmlDoc.getElementsByTagName('dict')[0];
+    const deviceInfo = {};
+    
+    // Helper function to get value for a key
+    const getValue = (keyName) => {
+      const keys = dict.getElementsByTagName('key');
+      for (let i = 0; i < keys.length; i++) {
+        const keyNode = keys[i];
+        if (keyNode && keyNode.firstChild && keyNode.firstChild.nodeValue === keyName) {
+          const nextSibling = keyNode.nextSibling;
+          // Skip text nodes (whitespace)
+          const valueNode = nextSibling.nodeType === 3 ? nextSibling.nextSibling : nextSibling;
+          return valueNode && valueNode.firstChild ? valueNode.firstChild.nodeValue : '';
+        }
+      }
+      return '';
     };
+
+    deviceInfo.UDID = getValue('UDID');
+    deviceInfo.DEVICE_NAME = getValue('DEVICE_NAME');
+    deviceInfo.PRODUCT = getValue('PRODUCT');
+    deviceInfo.VERSION = getValue('VERSION');
+    deviceInfo.CHALLENGE = getValue('CHALLENGE');
     
     // Create the redirect URL with parameters
     const params = new URLSearchParams(deviceInfo).toString();

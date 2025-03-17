@@ -5,7 +5,7 @@
     <key>PayloadContent</key>
     <dict>
         <key>URL</key>
-        <string>https://nashihu.github.io/Get-iOS-UDID/done.html</string>
+        <string>https://ahmad-nashihuddien.netlify.app/Get-iOS-UDID/done.html</string>
         <key>Method</key>
         <string>GET</string>
         <key>DeviceAttributes</key>

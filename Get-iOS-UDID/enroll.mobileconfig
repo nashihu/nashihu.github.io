@@ -28,5 +28,9 @@
         <string>This profile will help retrieve your device UDID and other information.</string>
         <key>PayloadType</key>
         <string>Profile Service</string>
+        <key>PayloadScope</key>
+        <string>User</string>
+        <key>PayloadRemovalDisallowed</key>
+        <false/>
     </dict>
 </plist>

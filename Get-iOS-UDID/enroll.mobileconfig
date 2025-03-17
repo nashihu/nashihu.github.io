@@ -8,29 +8,26 @@
             <string>https://ahmad-nashihuddien.netlify.app/api/process-device-info</string>
             <key>DeviceAttributes</key>
             <array>
-                <string>UDID</string>
-                <string>DEVICE_NAME</string>
-                <string>VERSION</string>
-                <string>PRODUCT</string>
+            <string>DEVICE_NAME</string>
+            <string>UDID</string>
+            <string>PRODUCT</string>
+            <string>VERSION</string>
+            <string>SERIAL</string>
             </array>
         </dict>
         <key>PayloadOrganization</key>
-        <string>UDID Service</string>
+        <string>example</string>
         <key>PayloadDisplayName</key>
-        <string>iOS UDID Profile</string>
+        <string>Profile Service</string>
         <key>PayloadVersion</key>
         <integer>1</integer>
         <key>PayloadUUID</key>
-        <string>3C4DC7D7-4648-4C7F-81F6-7C8A8E95E2E3</string>
+        <string>D84C2DBF-2E70-4D91-A55A-4AB4D56C6E5A</string>
         <key>PayloadIdentifier</key>
-        <string>app.netlify.ahmad-nashihuddien</string>
+        <string>example.com</string>
         <key>PayloadDescription</key>
-        <string>This profile will help retrieve your device UDID and other information.</string>
+        <string>example</string>
         <key>PayloadType</key>
         <string>Profile Service</string>
-        <key>PayloadScope</key>
-        <string>User</string>
-        <key>PayloadRemovalDisallowed</key>
-        <false/>
     </dict>
-</plist>
+</plist>            

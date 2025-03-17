@@ -23,7 +23,7 @@
         <key>PayloadUUID</key>
         <string>3C4DC7D7-4648-4C7F-81F6-7C8A8E95E2E3</string>
         <key>PayloadIdentifier</key>
-        <string>com.nashihu.github.io.udid</string>
+        <string>app.netlify.ahmad-nashihuddien</string>
         <key>PayloadDescription</key>
         <string>This profile will help retrieve your device UDID and other information.</string>
         <key>PayloadType</key>

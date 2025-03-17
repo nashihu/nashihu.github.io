@@ -22,6 +22,7 @@ exports.handler = async (event, context) => {
       VERSION: xmlDoc.getElementsByTagName('VERSION')[0]?.textContent || '',
       CHALLENGE: xmlDoc.getElementsByTagName('CHALLENGE')[0]?.textContent || ''
     };
+    console.log(deviceInfo);
 
     return {
       statusCode: 200,

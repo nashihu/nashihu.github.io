@@ -15,7 +15,10 @@ exports.handler = async (event, context) => {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlData, "text/xml");
 
+    console.log("mau console.log")
     console.log(`parsed ${xmlDoc}`);
+    console.log(xmlDoc);
+    console.log("done");
     
     // Validate that it's a plist
     if (!xmlDoc.getElementsByTagName('plist').length) {

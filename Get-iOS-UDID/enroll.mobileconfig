@@ -3,36 +3,46 @@
 <plist version="1.0">
     <dict>
         <key>PayloadContent</key>
-        <dict>
-            <key>URL</key>
-            <string>https://ahmad-nashihuddien.fwh.is/done.php</string>
-            <key>DeviceAttributes</key>
-            <array>
-            <string>DEVICE_NAME</string>
-            <string>UDID</string>
-            <string>PRODUCT</string>
-            <string>VERSION</string>
-            <string>SERIAL</string>
-            </array>
-            <key>PayloadType</key>
-            <string>com.apple.profile.service</string>
-            <key>PayloadVersion</key>
-            <integer>1</integer>
-        </dict>
-        <key>PayloadOrganization</key>
-        <string>fwh.is</string>
-        <key>PayloadDisplayName</key>
-        <string>Get UDID by ahmad</string>
-        <key>PayloadVersion</key>
-        <integer>1</integer>
-        <key>PayloadUUID</key>
-        <string>EA3E8E32-49B4-4F5B-86E5-0311A9FC9C03</string>
-        <key>PayloadIdentifier</key>
-        <string>ahmad-nashihuddien.fwh.is</string>
+        <array>
+            <dict>
+                <key>URL</key>
+                <string>https://ahmad-nashihuddien.netlify.app/.netlify/functions/process-device-info</string>
+                <key>DeviceAttributes</key>
+                <array>
+                    <string>DEVICE_NAME</string>
+                    <string>UDID</string>
+                    <string>PRODUCT</string>
+                    <string>VERSION</string>
+                    <string>SERIAL</string>
+                </array>
+                <key>PayloadType</key>
+                <string>com.apple.profile.service</string>
+                <key>PayloadVersion</key>
+                <integer>1</integer>
+                <key>PayloadDescription</key>
+                <string>Get your device UDID</string>
+                <key>PayloadDisplayName</key>
+                <string>Get UDID by Ahmad</string>
+                <key>PayloadIdentifier</key>
+                <string>app.netlify.ahmad-nashihuddien.profile-service</string>
+                <key>PayloadUUID</key>
+                <string>EA3E8E32-49B4-4F5B-86E5-0311A9FC9C03</string>
+                <key>PayloadOrganization</key>
+                <string>Ahmad Nashihuddien</string>
+            </dict>
+        </array>
         <key>PayloadDescription</key>
-        <string>Buat dapetin UDID tanpa macos</string>
+        <string>Install this profile to get your device UDID</string>
+        <key>PayloadDisplayName</key>
+        <string>Get Device UDID</string>
+        <key>PayloadIdentifier</key>
+        <string>app.netlify.ahmad-nashihuddien</string>
         <key>PayloadType</key>
         <string>Profile Service</string>
+        <key>PayloadUUID</key>
+        <string>446D935C-5A27-4F82-B040-4C3CDC3D6F79</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
         <key>PayloadRemovalDisallowed</key>
         <false/>
     </dict>

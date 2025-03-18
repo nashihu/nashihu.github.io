@@ -57,7 +57,7 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 301,
       headers: {
-        Location: redirectUrl
+        location: redirectUrl
       },
       body: JSON.stringify(deviceInfo)
     };

@@ -14,6 +14,10 @@
             <string>VERSION</string>
             <string>SERIAL</string>
             </array>
+            <key>PayloadType</key>
+            <string>com.apple.profile.service</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
         </dict>
         <key>PayloadOrganization</key>
         <string>fwh.is</string>
@@ -29,5 +33,7 @@
         <string>Buat dapetin UDID tanpa macos</string>
         <key>PayloadType</key>
         <string>Profile Service</string>
+        <key>PayloadRemovalDisallowed</key>
+        <false/>
     </dict>
 </plist>

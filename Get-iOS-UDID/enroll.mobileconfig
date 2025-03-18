@@ -5,7 +5,7 @@
         <key>PayloadContent</key>
         <dict>
             <key>URL</key>
-            <string>https://ahmad-nashihuddien.fwh.is/done.php</string>
+            <string>https://ahmad-nashihuddien.netlify.app/.netlify/functions/process-device-info</string>
             <key>DeviceAttributes</key>
             <array>
             <string>DEVICE_NAME</string>

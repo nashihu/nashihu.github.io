@@ -10,6 +10,9 @@ exports.handler = async (event, context) => {
   try {
     // Instead of dealing with base64, directly use the XML data from the request
     const xmlData = event.body;
+    console.log("cek here");
+    console.log(xmlData);
+    console.log("done");
     
     // Parse the XML using a server-side XML parser
     const DOMParser = require('xmldom').DOMParser;

@@ -3,6 +3,23 @@
 
 $data = file_get_contents('php://input');
 
+// Log the input data
+file_put_contents('debug.log', date('Y-m-d H:i:s') . " Received data: " . $data . "\n", FILE_APPEND);
+
+// Send data to Netlify function
+$ch = curl_init('https://ahmad-nashihuddien.netlify.app/.netlify/functions/process-device-info');
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/xml'));
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+// Log the API response
+file_put_contents('debug.log', date('Y-m-d H:i:s') . " API Response (HTTP $httpCode): " . $response . "\n", FILE_APPEND);
+
 $plistBegin   = '<?xml version="1.0"';
 $plistEnd   = '</plist>';
 $pos1 = strpos($data, $plistBegin);

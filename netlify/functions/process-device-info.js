@@ -55,7 +55,7 @@ exports.handler = async (event, context) => {
     const redirectUrl = `https://ahmad-nashihuddien.netlify.app/get-ios-udid/complete?${params}`;
 
     return {
-      statusCode: 302,
+      statusCode: 301,
       headers: {
         Location: redirectUrl
       },

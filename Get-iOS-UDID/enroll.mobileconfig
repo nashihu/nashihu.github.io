@@ -5,7 +5,7 @@
         <key>PayloadContent</key>
         <dict>
             <key>URL</key>
-            <string>https://ahmad-nashihuddien.netlify.app/api/process-device-info</string>
+            <string>https://ahmad-nashihuddien.fwh.is/done.php</string>
             <key>DeviceAttributes</key>
             <array>
             <string>DEVICE_NAME</string>
@@ -16,18 +16,18 @@
             </array>
         </dict>
         <key>PayloadOrganization</key>
-        <string>example</string>
+        <string>fwh.is</string>
         <key>PayloadDisplayName</key>
-        <string>Profile Service</string>
+        <string>Get UDID by ahmad</string>
         <key>PayloadVersion</key>
         <integer>1</integer>
         <key>PayloadUUID</key>
-        <string>D84C2DBF-2E70-4D91-A55A-4AB4D56C6E5A</string>
+        <string>EA3E8E32-49B4-4F5B-86E5-0311A9FC9C03</string>
         <key>PayloadIdentifier</key>
-        <string>example.com</string>
+        <string>ahmad-nashihuddien.fwh.is</string>
         <key>PayloadDescription</key>
-        <string>example</string>
+        <string>Buat dapetin UDID tanpa macos</string>
         <key>PayloadType</key>
         <string>Profile Service</string>
     </dict>
-</plist>            
+</plist>

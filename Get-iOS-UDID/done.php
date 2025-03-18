@@ -72,6 +72,6 @@ $iterator++;
 
 $params = "UDID=".$UDID."&CHALLENGE=".$CHALLENGE."&DEVICE_NAME=".$DEVICE_NAME."&DEVICE_PRODUCT=".$DEVICE_PRODUCT."&DEVICE_VERSION=".$DEVICE_VERSION;
 
-header('Location: nashihu.github.io/Get-iOS-UDID/complete?'.$params);
+header('Location: https://ahmad-nashihuddien.fwh.is/complete?'.$params);
 
 ?>

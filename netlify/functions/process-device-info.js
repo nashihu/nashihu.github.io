@@ -8,16 +8,37 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // Instead of dealing with base64, directly use the XML data from the request
-    const xmlData = event.body;
-    console.log("cek here");
-    console.log(xmlData);
-    console.log("done");
+    const forge = require('node-forge');
     
-    // Parse the XML using a server-side XML parser
+    // Get the raw data and log it for debugging
+    const rawData = event.body;
+    console.log('Raw data length:', rawData.length);
+    console.log('Content-Type:', event.headers['content-type']);
+
+    // Try different parsing approaches
+    let plistData;
+    try {
+      // Clean and decode the base64 data
+      const cleanedData = rawData.replace(/[\r\n\s]/g, ''); // Remove whitespace and line breaks
+      const binaryData = Buffer.from(cleanedData, 'base64');
+      
+      // Parse as PKCS#7
+      const asn1 = forge.asn1.fromDer(binaryData.toString('binary'));
+      const p7 = forge.pkcs7.messageFromAsn1(asn1);
+      
+      // Extract the content
+      plistData = Buffer.from(p7.content, 'binary').toString('utf8');
+      console.log('PKCS#7 parsing successful');
+      console.log('Extracted plist:', plistData.substring(0, 100));
+    } catch (e1) {
+      console.log('PKCS#7 parsing failed:', e1.message);
+      throw new Error('Failed to parse PKCS#7 data');
+    }
+
+    // Parse the plist XML
     const DOMParser = require('xmldom').DOMParser;
     const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlData, "text/xml");
+    const xmlDoc = parser.parseFromString(plistData, "text/xml");
 
     // Validate that it's a plist
     if (!xmlDoc.getElementsByTagName('plist').length) {

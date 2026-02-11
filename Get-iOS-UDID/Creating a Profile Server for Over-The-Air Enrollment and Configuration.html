@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Creating a Profile Server for Over-The-Air Enrollment and Configuration</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40009505">
+    <meta id="document-version" name="document-version" content="1.6.1">
+    <meta id="build" name="build" content="c1e4c7a89af8f899a21cfa81fc33ba42" />
+    <meta id="chapterId" name="chapterId" content="TP40009505-CH2">
+    <meta id="date" name="date" content="2018-04-09">
+    <meta id="description" name="description" content="Describes how to build a server that generates profiles and delivers them to iPhone devices over the air.">
+    <meta id="book-title" name="book-title" content="Over-the-Air Profile Delivery and Configuration">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Documentation Archive">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2018 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Over-the-Air Profile Delivery and Configuration: Creating a Profile Server for Over-The-Air Enrollment and Configuration">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1282">
+    <link id="book-index-page" rel="Start" title="Over-the-Air Profile Delivery and Configuration" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="../ConfigurationProfileExamples/ConfigurationProfileExamples.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="../OTASecurity/OTASecurity.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1282/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1282/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40009505-CH2" title="Creating a Profile Server for Over-The-Air Enrollment and Configuration"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="awdappledeveloper"
+    </script>
+
+    <script type="text/javascript" src="https://developer.apple.com/assets/metrics/scripts/analytics.js"></script>
+    <script type="text/javascript">
+    s.channel="www.documentationarchive.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Documentation Archive</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Documentation Archive</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Over-the-Air Profile Delivery and Configuration</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../ConfigurationProfileExamples/ConfigurationProfileExamples.html'>Next</a><a class='previousLink' rel='prev' href='../OTASecurity/OTASecurity.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/TP40009505-CH2-SW2" title="Creating a Profile Server for Over-The-Air Enrollment and Configuration"></a>
+<h1 id="pageTitle">Creating a Profile Server for Over-The-Air Enrollment and Configuration</h1><p>When creating a profile server, you must perform several steps:</p><ol class="ol"><li class="li"><p>Configure your infrastructure. This is described in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW37" data-renderer-version="1">Configuring the Infrastructure</a></span>.</p></li><li class="li"><p>Obtain an SSL Certificate for your server. This is described in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW36" data-renderer-version="1">Obtaining an SSL Certificate</a></span>.</p></li><li class="li"><p>Create a template configuration profile. This is described in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW3" data-renderer-version="1">Creating A Template Configuration Profile</a></span>.</p></li><li class="li"><p>Create the server code. The pieces of a server are described in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW8" data-renderer-version="1">Starting the Server</a></span> and <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW13" data-renderer-version="1">Profile Service Handlers</a></span>.</p></li><li class="li"><p>Add appropriate authentication specific to your environment.</p></li><li class="li"><p>Test the service.</p></li></ol><p>The sections that follow take you through the various parts of the profile delivery service source code.</p>
+<section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW37" title="Configuring the Infrastructure"></a><h2 class="jump">Configuring the Infrastructure</h2><p>Implementing over-the-air enrollment and configuration requires you to integrate authentication, directory, and certificate services. The process can be deployed using standard web services, but you must set up several key systems ahead of time.</p><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW20" title="Directory Services"></a><h3 class="jump">Directory Services</h3><p>For user authentication, you can use basic HTTP authentication or integrate authentication with your existing directory services. Regardless of the services used, you will need to provide a web-based authentication method for your users to request enrollment.</p></section><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW38" title="Certificate Services"></a><h3 class="jump">Certificate Services</h3><p>The process of enrollment requires deployment of standard x.509 identity certificates to iOS users. To do this, you will need a CA (certificate authority) to issue the device credentials using the Simple Certificate Enrollment Protocol (SCEP).</p><p>Cisco IOS and Microsoft Server 2003 (with the add-on for certificate services) both support SCEP. There are also a number of hosted PKI services that support SCEP, such as Verisign, Entrust, and RSA. For links to PKI, SCEP, and related topics read the <span class="content_text"><a href="../Introduction/Introduction.html#//apple_ref/doc/uid/TP40009505-CH1-SW3" data-renderer-version="1">See Also</a></span> section in <span class="content_text"><a href="../Introduction/Introduction.html#//apple_ref/doc/uid/TP40009505-CH1-SW1" data-renderer-version="1">Introduction</a></span>.</p></section><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW39" title="Profile Services"></a><h3 class="jump">Profile Services</h3><p>To implement this process you will need to develop a profile service, which is an HTTP-based daemon that manages iOS-based device connections throughout the process, generates configuration profiles for the user, and verifies user credentials along the way.</p><p>There are a few key functions that the profile service needs to provide:</p><ul class="ul"><li class="li"><p>Host a user-accessible website to support the HTTPS session</p></li><li class="li"><p>Authenticate incoming user requests using a web-based authentication method (basic, or integrated with directory services)</p></li><li class="li"><p>Generate the necessary configuration profiles (XML format) depending on the phase of the process</p></li><li class="li"><p>Sign and encrypt configuration profiles using public key cryptography</p></li><li class="li"><p>Track the user through the steps in the process (via timestamp and logging methods)</p></li><li class="li"><p>Manage connections to the certificate authority or directory services</p></li></ul><p></p></section></section><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW36" title="Obtaining an SSL Certificate"></a><h2 class="jump">Obtaining an SSL Certificate</h2><p>The first step in setting up a profile service is to obtain or generate an SSL certificate for the web server. When hosting a profile server, each iOS-based device must be able to make a secure connection to the server. The easiest way to do this is to get an SSL certificate from a public CA that is already trusted by iOS. For a complete list, see <span class="content_text"><a href="https://support.apple.com/en-us/HT204132" class="urlLink" rel="external">Lists of Available Trusted Root Certificates in iOS</a></span>.</p><p>Alternatively, you can generate your own root certificate and self-sign it, though if you do, the user will be asked whether they trust the certificate.</p></section>
+<section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW3" title="Creating A Template Configuration Profile"></a>
+<h2 class="jump">Creating A Template Configuration Profile</h2><p>The profile service uses a template configuration profile as the starting point, then modifies the profile for a specific device. You must create this template ahead of time and save it to a file on disk. The Apple Configurator provides an easy means of creating a base profile.</p><p>In addition to general settings, this configuration profile should also define enterprise policies that you want to enforce. For company-owned equipment, it should be a locked profile to prevent the user from removing it from the device.</p><p>For more information about these profiles, read <span class="content_text"><a href="../../../../../featuredarticles/iPhoneConfigurationProfileRef/Introduction/Introduction.html#//apple_ref/doc/uid/TP40010206-CH1" data-renderer-version="1" target="_self">Configuration Profile Reference</a></span>.</p>
+
+
+</section>
+<section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW8" title="Starting the Server"></a>
+<h2 class="jump">Starting the Server</h2>
+
+<p>After you have an SSL certificate, you must configure a web server to host your profile service and an SCEP-aware certificate authority to issue certificates.</p><p>The initialization function, <code>init</code>, loads the HTTP server’s certificate and private SSL key. These keys and certificates are stored on disk for reuse together with the serial number of the last issued certificate. This function is shown in <span class="content_text">Listing 2-1</span>.</p>
+
+<a name="//apple_ref/doc/uid/TP40009505-CH2-SW9" title="Listing 2-1Starting the web server"></a><p class="codesample clear"><strong class="caption_number">Listing 2-1</strong>&nbsp;&nbsp;Starting the web server</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>world = WEBrick::HTTPServer.new(<span></span></pre></td></tr><tr><td scope="row"><pre>  :Port            =&gt; 8443,<span></span></pre></td></tr><tr><td scope="row"><pre>  :DocumentRoot    =&gt; Dir::pwd + "/htdocs",<span></span></pre></td></tr><tr><td scope="row"><pre>  :SSLEnable       =&gt; true,<span></span></pre></td></tr><tr><td scope="row"><pre>  :SSLVerifyClient =&gt; OpenSSL::SSL::VERIFY_NONE,<span></span></pre></td></tr><tr><td scope="row"><pre>  :SSLCertificate  =&gt; @@ssl_cert,<span></span></pre></td></tr><tr><td scope="row"><pre>  :SSLPrivateKey   =&gt; @@ssl_key<span></span></pre></td></tr><tr><td scope="row"><pre>)<span></span></pre></td></tr></table></div>
+
+
+<p>This example starts the server on port <code>8443</code> so it does not have to run as root. The <code>:DocumentRoot</code> value should contain the path of an empty directory inside the profile service directory.</p><p>You should enable SSL and set the values of <code>SSLCertificate</code> and <code>SSLPrivateKey</code> to point to your actual SSL certificate and key that you obtained in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW36" data-renderer-version="1">Obtaining an SSL Certificate</a></span>.</p><p>You should also disable client certificate authentication because the client device does not have a verifiable identity yet.</p>
+
+
+</section>
+<section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW13" title="Profile Service Handlers"></a>
+<h2 class="jump">Profile Service Handlers</h2><p>After you have a basic web server, you need to write handlers for several pages used in the enrollment and delivery process.</p><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW17" title="Phase 1: Authentication"></a><h3 class="jump">Phase 1: Authentication</h3><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW23" title="Welcome Page (/) URL Handler"></a><h4 class="jump">Welcome Page (/) URL Handler</h4><p>The welcome page is the first page new users see when they enter the site at the root level (<code>/</code>). A handler for this page is shown in <span class="content_text">Listing 2-2</span>.</p><a name="//apple_ref/doc/uid/TP40009505-CH2-SW10" title="Listing 2-2Handler for / URL"></a><p class="codesample clear"><strong class="caption_number">Listing 2-2</strong>&nbsp;&nbsp;Handler for <code>/</code> URL</p><div class="codesample clear"><table><tr><td scope="row"><pre>world.mount_proc("/") { |req, res|<span></span></pre></td></tr><tr><td scope="row"><pre>    res['Content-Type'] = "text/html"<span></span></pre></td></tr><tr><td scope="row"><pre>    res.body = &lt;&lt;WELCOME_MESSAGE<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>&lt;style&gt;<span></span></pre></td></tr><tr><td scope="row"><pre>body { margin:40px 40px;font-family:Helvetica;}<span></span></pre></td></tr><tr><td scope="row"><pre>h1 { font-size:80px; }<span></span></pre></td></tr><tr><td scope="row"><pre>p { font-size:60px; }<span></span></pre></td></tr><tr><td scope="row"><pre>a { text-decoration:none; }<span></span></pre></td></tr><tr><td scope="row"><pre>&lt;/style&gt;<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>&lt;h1 &gt;ACME Inc. Profile Service&lt;/h1&gt;<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>&lt;p&gt;If you had to accept the certificate accessing this page, you should<span></span></pre></td></tr><tr><td scope="row"><pre>download the &lt;a href="/CA"&gt;root certificate&lt;/a&gt; and install it so it becomes trusted.<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>&lt;p&gt;We are using a self-signed<span></span></pre></td></tr><tr><td scope="row"><pre>certificate here, for production it should be issued by a known CA.<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>&lt;p&gt;After that, go ahead and &lt;a href="/enroll"&gt;enroll&lt;/a&gt;<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>WELCOME_MESSAGE<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div><p>If you used a self-signed certificate above, when the user goes to this page, Safari asks whether you want to trust the server’s SSL certificate. Agreeing allows you to view the page. This is not sufficient for enrollment, however.</p><p>Regardless of whether the site certificate is self-signed or not, the enrollment process with the SCEP service also requires the device to trust the custom certificate authority’s root certificate, which means adding the CA root certificate to the device’s trusted anchors list. To do this, you must create a URL handler that provides the certificate with the correct MIME type.</p></section><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW24" title="Root Certificate (/CA) URL Handler"></a><h4 class="jump">Root Certificate (/CA) URL Handler</h4><p>The link to <code>/CA</code> in the welcome page provides a means for the user to add the custom certificate authority’s root certificate to the device’s trusted anchors list. This is required for the SCEP stage of the enrollment process.</p><p>After Safari on iOS loads the root certificate from that URL, it asks the user for permission to add the new root certificate to the device’s trusted anchors list. (You should access this page only over a secure connection.)</p><p>The handler in <span class="content_text">Listing 2-3</span> sends the root certificate.</p><a name="//apple_ref/doc/uid/TP40009505-CH2-SW11" title="Listing 2-3Handler for /CA URL"></a><p class="codesample clear"><strong class="caption_number">Listing 2-3</strong>&nbsp;&nbsp;Handler for <code>/CA</code> URL</p><div class="codesample clear"><table><tr><td scope="row"><pre>world.mount_proc("/CA") { |req, res|<span></span></pre></td></tr><tr><td scope="row"><pre>    res['Content-Type'] = "application/x-x509-ca-cert"<span></span></pre></td></tr><tr><td scope="row"><pre>    res.body = @@root_cert.to_der<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div><p>After the user has downloaded the root certificate from a trusted web server over HTTPS, the user can click to continue the enrollment process.</p></section><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW25" title="Enrollment (/enroll) URL Handler"></a><h4 class="jump">Enrollment (/enroll) URL Handler</h4><p><span class="content_text">Listing 2-4</span> provides a handler for the <code>/enroll</code> link on the welcome page.</p><a name="//apple_ref/doc/uid/TP40009505-CH2-SW1" title="Listing 2-4Handler for /enroll URL"></a><p class="codesample clear"><strong class="caption_number">Listing 2-4</strong>&nbsp;&nbsp;Handler for <code>/enroll</code> URL</p><div class="codesample clear"><table><tr><td scope="row"><pre>world.mount_proc("/enroll") { |req, res|<span></span></pre></td></tr><tr><td scope="row"><pre>    HTTPAuth.basic_auth(req, res, "realm") {|user, password|<span></span></pre></td></tr><tr><td scope="row"><pre>        user == 'apple' &amp;&amp; password == 'apple'<span></span></pre></td></tr><tr><td scope="row"><pre>    }<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    res['Content-Type'] = "application/x-apple-aspen-config"<span></span></pre></td></tr><tr><td scope="row"><pre>    configuration = profile_service_payload(req, "signed-auth-token")<span></span></pre></td></tr><tr><td scope="row"><pre>    signed_profile = OpenSSL::PKCS7.sign(@@ssl_cert, @@ssl_key,<span></span></pre></td></tr><tr><td scope="row"><pre>            configuration, [], OpenSSL::PKCS7::BINARY)<span></span></pre></td></tr><tr><td scope="row"><pre>    res.body = signed_profile.to_der<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div><p>The handler above performs very limited authentication to identify the user. The user logs in by sending the word <code>apple</code> as the user name and password over a connection authenticated with HTTP basic authentication. In a production server environment, you should instead tie this code into a directory service or some other account system.</p><p>This handler sets the MIME type of its response to <code>application/x-apple-aspen-config</code>, so Safari on iOS treats the response as a configuration profile.</p><p>The <code>profile_service_payload</code> function (<span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW4" data-renderer-version="1">Profile Service Payload</a></span>) produces a special configuration that tells the phone to enroll itself in the profile service. The literal string <code>"signed-auth-token"</code> should be replaced with an authorization token from the authentication service that verified the user’s credentials.</p><p>Finally, this function signs the profile by calling <code>OpenSSL::PKCS7.sign</code> and sends the signed profile to the device.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40009505-CH2-SW12" title="Security Note"></a><p><strong>Security Note:</strong>&nbsp;This exchange occurs through HTTPS to protect the user name, password, and signed authorization token, so signing with the SSL certificate does not provide additional security. It does, however, make sense if the profile service uses a different SSL certificate and resides on a separate HTTPS server.</p><p></p></aside></div></section><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW4" title="Profile Service Payload"></a><h4 class="jump">Profile Service Payload</h4>
+
+<p>The first payload sent to the device (after establishing that it is allowed to enroll) is the profile service payload. This payload is sent by a call to <code>profile_service_payload(req, "signed-auth-token")</code> from the <code>/enroll</code> handler (<span class="content_text">Listing 2-4</span>).</p><p>For a sample profile service payload, see <span class="content_text"><a href="../ConfigurationProfileExamples/ConfigurationProfileExamples.html#//apple_ref/doc/uid/TP40009505-CH4-SW4" data-renderer-version="1" target="_self">Sample Phase 1 Server Response</a></span>.</p><a name="//apple_ref/doc/uid/TP40009505-CH2-SW14" title="Listing 2-5profile_service_payload function"></a><p class="codesample clear"><strong class="caption_number">Listing 2-5</strong>&nbsp;&nbsp;<code>profile_service_payload</code> function</p><div class="codesample clear"><table><tr><td scope="row"><pre>def profile_service_payload(request, challenge)<span></span></pre></td></tr><tr><td scope="row"><pre>    payload = general_payload()<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadType'] = "Profile Service" # do not modify<span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadIdentifier'] = "com.acme.mobileconfig.profile-service"<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    # strings that show up in UI, customisable<span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadDisplayName'] = "ACME Profile Service"<span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadDescription'] = "Install this profile to enroll for secure access to ACME Inc."<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    payload_content = Hash.new<span></span></pre></td></tr><tr><td scope="row"><pre>    payload_content['URL'] = "https://" + service_address(request) + "/profile"<span></span></pre></td></tr><tr><td scope="row"><pre>    payload_content['DeviceAttributes'] = [<span></span></pre></td></tr><tr><td scope="row"><pre>        "UDID",<span></span></pre></td></tr><tr><td scope="row"><pre>        "VERSION"<span></span></pre></td></tr><tr><td scope="row"><pre>=begin<span></span></pre></td></tr><tr><td scope="row"><pre>        "PRODUCT",              # e.g. iPhone1,1 or iPod2,1<span></span></pre></td></tr><tr><td scope="row"><pre>        "SERIAL",               # The device's serial number<span></span></pre></td></tr><tr><td scope="row"><pre>        "MEID",                 # The device's Mobile Equipment Identifier<span></span></pre></td></tr><tr><td scope="row"><pre>        "IMEI"<span></span></pre></td></tr><tr><td scope="row"><pre>=end<span></span></pre></td></tr><tr><td scope="row"><pre>        ];<span></span></pre></td></tr><tr><td scope="row"><pre>    if (challenge &amp;&amp; !challenge.empty?)<span></span></pre></td></tr><tr><td scope="row"><pre>        payload_content['Challenge'] = challenge<span></span></pre></td></tr><tr><td scope="row"><pre>    end<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadContent'] = payload_content<span></span></pre></td></tr><tr><td scope="row"><pre>    Plist::Emit.dump(payload)<span></span></pre></td></tr><tr><td scope="row"><pre>end<span></span></pre></td></tr></table></div><p>This function starts by calling <code>general_payload</code>, which sets the version and organization (these values don’t change on a given server) and returns a template payload that provides a UUID for the profile.</p><p>The payload content provides a URL where the device should send its identification (using HTTP POST), along with a list of attributes that the server expects the device to provide (software version, IMEI, and so on).</p><p>If an authorization token (representing a user authentication) is passed in from the caller (shown in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW1" data-renderer-version="1">Listing 2-4</a></span>), that token is added as the <code>Challenge</code> attribute.</p><p>In response, the device sends back the list of requested attributes along with their values. If the server sent a <code>Challenge</code> value in its request, the device also includes this value along with the requested device attributes. Finally, to prove it is an iOS-based device, the device signs this identification with its device certificate. This response is sent to the handler for the <code>/profile</code> URL. </p><p>Validate that the device certificate is issued from “Apple iPhone Device CA”, which has the following Base64 encoded PEM data:</p><div class="codesample clear"><table><tr><td scope="row"><pre>-----BEGIN CERTIFICATE-----
+MIIDaTCCAlGgAwIBAgIBATANBgkqhkiG9w0BAQUFADB5MQswCQYDVQQGEwJVUzET
+MBEGA1UEChMKQXBwbGUgSW5jLjEmMCQGA1UECxMdQXBwbGUgQ2VydGlmaWNhdGlv
+biBBdXRob3JpdHkxLTArBgNVBAMTJEFwcGxlIGlQaG9uZSBDZXJ0aWZpY2F0aW9u
+IEF1dGhvcml0eTAeFw0wNzA0MTYyMjU0NDZaFw0xNDA0MTYyMjU0NDZaMFoxCzAJ
+BgNVBAYTAlVTMRMwEQYDVQQKEwpBcHBsZSBJbmMuMRUwEwYDVQQLEwxBcHBsZSBp
+UGhvbmUxHzAdBgNVBAMTFkFwcGxlIGlQaG9uZSBEZXZpY2UgQ0EwgZ8wDQYJKoZI
+hvcNAQEBBQADgY0AMIGJAoGBAPGUSsnquloYYK3Lok1NTlQZaRdZB2bLl+hmmkdf
+Rq5nerVKc1SxywT2vTa4DFU4ioSDMVJl+TPhl3ecK0wmsCU/6TKqewh0lOzBSzgd
+Z04IUpRai1mjXNeT9KD+VYW7TEaXXm6yd0UvZ1y8Cxi/WblshvcqdXbSGXH0KWO5
+JQuvAgMBAAGjgZ4wgZswDgYDVR0PAQH/BAQDAgGGMA8GA1UdEwEB/wQFMAMBAf8w
+HQYDVR0OBBYEFLL+ISNEhpVqedWBJo5zENinTI50MB8GA1UdIwQYMBaAFOc0Ki4i
+3jlga7SUzneDYS8xoHw1MDgGA1UdHwQxMC8wLaAroCmGJ2h0dHA6Ly93d3cuYXBw
+bGUuY29tL2FwcGxlY2EvaXBob25lLmNybDANBgkqhkiG9w0BAQUFAAOCAQEAd13P
+Z3pMViukVHe9WUg8Hum+0I/0kHKvjhwVd/IMwGlXyU7DhUYWdja2X/zqj7W24Aq5
+7dEKm3fqqxK5XCFVGY5HI0cRsdENyTP7lxSiiTRYj2mlPedheCn+k6T5y0U4Xr40
+FXwWb2nWqCF1AgIudhgvVbxlvqcxUm8Zz7yDeJ0JFovXQhyO5fLUHRLCQFssAbf8
+B4i8rYYsBUhYTspVJcxVpIIltkYpdIRSIARA49HNvKK4hzjzMS/OhKQpVKw+OCEZ
+xptCVeN2pjbdt9uzi175oVo/u6B2ArKAW17u6XEHIdDMOe7cb33peVI6TD15W4MI
+pyQPbp8orlXe+tA8JA==
+-----END CERTIFICATE-----<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr></table></div>
+<div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40009505-CH2-SW915" title="WARNING"></a><p><strong>WARNING:</strong>&nbsp;
+When device certificates signed “Apple iPhone Device CA” are evaluated their validity dates should be ignored.</p><p></p></aside></div>
+<div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40009505-CH2-SW15" title="Values Note"></a><p><strong>Values Note:</strong>&nbsp;The payload type must not be changed; the phone expects to see the literal string <code>"Profile Service"</code>.</p><p>The identifier should be changed to an appropriate reverse-DNS-style identifier. The identifier should remain constant for any given profile service.</p><p>The display name and description values are presented in the user interface to explain to the user what is about to happen.</p><p></p></aside></div></section></section><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW18" title="Phase 2: Certificate Enrollment"></a><h3 class="jump">Phase 2: Certificate Enrollment</h3><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW26" title="Profile Request (/profile) URL Handler"></a><h4 class="jump">Profile Request (/profile) URL Handler</h4>
+
+<p>The handler for the <code>/profile</code> URL is called twice—once to send the device authentication request before the device is allowed to enroll using SCEP, then again after the SCEP step to deliver the final profile to the device.</p><p>In this handler, the profile server receives a PKCS#7 signed data payload from the device, which it then unpack and verifies. For a sample of this profile, see <span class="content_text"><a href="../ConfigurationProfileExamples/ConfigurationProfileExamples.html#//apple_ref/doc/uid/TP40009505-CH4-SW5" data-renderer-version="1" target="_self">Sample Phase 2 Device Response</a></span>.</p><p>To make it easier to follow, the <code>/profile</code> handler is divided into smaller pieces. The first piece of this handler is shown in <span class="content_text">Listing 2-6</span>.</p>
+
+<a name="//apple_ref/doc/uid/TP40009505-CH2-SW21" title="Listing 2-6Handler for /profile URL, part 1 of 7"></a><p class="codesample clear"><strong class="caption_number">Listing 2-6</strong>&nbsp;&nbsp;Handler for <code>/profile</code> URL, part 1 of 7</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>world.mount_proc("/profile") { |req, res|<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    # verify CMS blob, but don't check signer certificate<span></span></pre></td></tr><tr><td scope="row"><pre>    p7sign = OpenSSL::PKCS7::PKCS7.new(req.body)<span></span></pre></td></tr><tr><td scope="row"><pre>    store = OpenSSL::X509::Store.new<span></span></pre></td></tr><tr><td scope="row"><pre>    p7sign.verify(nil, store, nil, OpenSSL::PKCS7::NOVERIFY)<span></span></pre></td></tr><tr><td scope="row"><pre>    signers = p7sign.signers<span></span></pre></td></tr></table></div>
+<div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40009505-CH2-SW30" title="Security Note"></a><p><strong>Security Note:</strong>&nbsp;
+
+The reference implementation does not verify the signer here. You should verify it against a trust store made up of intermediates from the device certificate authority up to the root CA and the hierarchy you'll use to issue profile service identities. </p><p></p></aside></div>
+<p>If the device signed the request with a certificate that belongs to the hierarchy that issues profile service identities (that is, if this device has enrolled previously), execution follows the first path (shown in <span class="content_text">Listing 2-7</span>). This path either issues an updated encrypted configuration or, as implemented here, redirects the device to enroll again. For testing purposes, any device that has gotten a profile previously must reenroll.</p>
+
+<a name="//apple_ref/doc/uid/TP40009505-CH2-SW31" title="Listing 2-7Handler for /profile URL, part 2 of 7"></a><p class="codesample clear"><strong class="caption_number">Listing 2-7</strong>&nbsp;&nbsp;Handler for <code>/profile</code> URL, part 2 of 7</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>    # this should be checking whether the signer is a cert we issued<span></span></pre></td></tr><tr><td scope="row"><pre>    #<span></span></pre></td></tr><tr><td scope="row"><pre>    if (signers[0].issuer.to_s == @@root_cert.subject.to_s)<span></span></pre></td></tr><tr><td scope="row"><pre>        print "Request from cert with serial #{signers[0].serial}"<span></span></pre></td></tr><tr><td scope="row"><pre>            " seen previously: #{@@issued_first_profile.include?(signers[0].serial.to_s)}"<span></span></pre></td></tr><tr><td scope="row"><pre>            " (profiles issued to #{@@issued_first_profile.to_a}) \n"<span></span></pre></td></tr><tr><td scope="row"><pre>        if (@@issued_first_profile.include?(signers[0].serial.to_s))<span></span></pre></td></tr><tr><td scope="row"><pre>          res.set_redirect(WEBrick::HTTPStatus::MovedPermanently, "/enroll")<span></span></pre></td></tr><tr><td scope="row"><pre>            print res<span></span></pre></td></tr></table></div>
+<p>By this point, any previously fully enrolled clients have been redirected to the enrollment page to enroll again.</p><p>If the code gets past this step, it has received either a list of properties or a new request for a final profile.</p><p>In <span class="content_text">Listing 2-8</span>, the encrypted profile is generated. Because this is part of phase 3 (device configuration), it is included here without further comment, and is explained further in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW16" data-renderer-version="1">The /profile Handler Revisited</a></span>.</p>
+
+<a name="//apple_ref/doc/uid/TP40009505-CH2-SW19" title="Listing 2-8Handler for /profile URL, part 3 of 7"></a><p class="codesample clear"><strong class="caption_number">Listing 2-8</strong>&nbsp;&nbsp;Handler for <code>/profile</code> URL, part 3 of 7</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>        else<span></span></pre></td></tr><tr><td scope="row"><pre>            @@issued_first_profile.add(signers[0].serial.to_s)<span></span></pre></td></tr><tr><td scope="row"><pre>            payload = client_cert_configuration_payload(req)<span></span></pre></td></tr><tr><td scope="row"><pre>                        # vpn_configuration_payload(req)<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>            #File.open("payload", "w") { |f| f.write payload }<span></span></pre></td></tr><tr><td scope="row"><pre>            encrypted_profile = OpenSSL::PKCS7.encrypt(p7sign.certificates,<span></span></pre></td></tr><tr><td scope="row"><pre>                payload, OpenSSL::Cipher::Cipher::new("des-ede3-cbc"),<span></span></pre></td></tr><tr><td scope="row"><pre>                OpenSSL::PKCS7::BINARY)<span></span></pre></td></tr><tr><td scope="row"><pre>            configuration = configuration_payload(req, encrypted_profile.to_der)<span></span></pre></td></tr><tr><td scope="row"><pre>        end<span></span></pre></td></tr></table></div>
+<p>The code in <span class="content_text">Listing 2-9</span> handles the case where the device sent its identification. This part should ideally verify that the response was signed with a valid device certificate and should parse the attributes.</p>
+
+<a name="//apple_ref/doc/uid/TP40009505-CH2-SW32" title="Listing 2-9Handler for /profile URL, part 4 of 7"></a><p class="codesample clear"><strong class="caption_number">Listing 2-9</strong>&nbsp;&nbsp;Handler for <code>/profile</code> URL, part 4 of 7</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>    else<span></span></pre></td></tr><tr><td scope="row"><pre>        #File.open("signeddata", "w") { |f| f.write p7sign.data }<span></span></pre></td></tr><tr><td scope="row"><pre>        device_attributes = Plist::parse_xml(p7sign.data)<span></span></pre></td></tr><tr><td scope="row"><pre>        #print device_attributes<span></span></pre></td></tr></table></div>
+
+
+<p>The next bit of code, <span class="content_text">Listing 2-10</span>, is commented out with <code>=begin</code> and <code>=end</code>. It shows how you can restrict issuance of profiles to a single device (by its unique device ID, or UDID) and verify that the <code>Challenge</code> is the same as the <code>Challenge</code> value issued previously.</p><p>In a production environment, this is typically replaced by site-specific code that queries a directory service to validate the authorization token and queries a database of authorized UDID values for devices owned by your organization.</p>
+
+<a name="//apple_ref/doc/uid/TP40009505-CH2-SW22" title="Listing 2-10Handler for /profile URL, part 5 of 7"></a><p class="codesample clear"><strong class="caption_number">Listing 2-10</strong>&nbsp;&nbsp;Handler for <code>/profile</code> URL, part 5 of 7</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>=begin<span></span></pre></td></tr><tr><td scope="row"><pre>        # Limit issuing of profiles to one device and validate challenge<span></span></pre></td></tr><tr><td scope="row"><pre>        if device_attributes['UDID'] == "213cee5cd11778bee2cd1cea624bcc0ab813d235" &amp;&amp;<span></span></pre></td></tr><tr><td scope="row"><pre>            device_attributes['CHALLENGE'] == "signed-auth-token"<span></span></pre></td></tr><tr><td scope="row"><pre>        end<span></span></pre></td></tr><tr><td scope="row"><pre>=end<span></span></pre></td></tr></table></div>
+<p>Next, the snippet in <span class="content_text">Listing 2-11</span> obtains a payload to send to the device that will tell it how to complete the enrollment process. The details of this configuration are described in the discussion of <code>encryption_cert_payload</code>.</p>
+
+<a name="//apple_ref/doc/uid/TP40009505-CH2-SW33" title="Listing 2-11Handler for /profile URL, part 6 of 7"></a><p class="codesample clear"><strong class="caption_number">Listing 2-11</strong>&nbsp;&nbsp;Handler for <code>/profile</code> URL, part 6 of 7</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>        configuration = encryption_cert_payload(req, "")<span></span></pre></td></tr><tr><td scope="row"><pre>    end<span></span></pre></td></tr></table></div>
+<p>Finally, if this function has nothing to send, it raises an exception that makes the http request fail. Otherwise it signs the profile to be sent and returns it. These bits of code are shown in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW27" data-renderer-version="1">Listing 2-12</a></span>.</p>
+
+<a name="//apple_ref/doc/uid/TP40009505-CH2-SW27" title="Listing 2-12Handler for /profile URL, part 7 of 7"></a><p class="codesample clear"><strong class="caption_number">Listing 2-12</strong>&nbsp;&nbsp;Handler for <code>/profile</code> URL, part 7 of 7</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>    if !configuration || configuration.empty?<span></span></pre></td></tr><tr><td scope="row"><pre>        raise "you lose"<span></span></pre></td></tr><tr><td scope="row"><pre>    else<span></span></pre></td></tr><tr><td scope="row"><pre>   	# we're either sending a configuration to enroll the profile service cert<span></span></pre></td></tr><tr><td scope="row"><pre>   	# or a profile specifically for this device<span></span></pre></td></tr><tr><td scope="row"><pre>   	res['Content-Type'] = "application/x-apple-aspen-config"<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>        signed_profile = OpenSSL::PKCS7.sign(@@ssl_cert, @@ssl_key,<span></span></pre></td></tr><tr><td scope="row"><pre>            configuration, [], OpenSSL::PKCS7::BINARY)<span></span></pre></td></tr><tr><td scope="row"><pre>        res.body = signed_profile.to_der<span></span></pre></td></tr><tr><td scope="row"><pre>        File.open("profile.der", "w") { |f| f.write signed_profile.to_der }<span></span></pre></td></tr><tr><td scope="row"><pre>    end<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div>
+
+
+<p>After this function sends the configuration to tell the device how to enroll, the device enrolls its identity using SCEP. Then, it sends a request for the <code>/profile</code> URL associated with this handler a second time to obtain the final profile.</p><p>The actual payload is described in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW6" data-renderer-version="1">Configuration Profile Payload</a></span> and <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW7" data-renderer-version="1">Encryption Certificate Payload</a></span>. For a sample configuration profile, see <span class="content_text"><a href="../ConfigurationProfileExamples/ConfigurationProfileExamples.html#//apple_ref/doc/uid/TP40009505-CH4-SW6" data-renderer-version="1" target="_self">Sample Phase 3 Server Response With SCEP Specifications</a></span>.</p></section></section><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW28" title="Phase 3: Device Configuration"></a><h3 class="jump">Phase 3: Device Configuration</h3><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW16" title="The /profile Handler Revisited"></a><h4 class="jump">The /profile Handler Revisited</h4><p>Previously, <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW19" data-renderer-version="1">Listing 2-8</a></span> showed the encrypted profile generation process. The code in question doesn’t actually run until phase 3, however, so the details were deferred. This section revisits that section of the <code>/profile</code> handler and provides explanation.</p><p>The encrypted profile is generated as follows:</p><ul class="ul"><li class="li"><p>A configuration is generated with a set of configuration payloads. (See <span class="content_text"><a href="../../../../../featuredarticles/iPhoneConfigurationProfileRef/Introduction/Introduction.html#//apple_ref/doc/uid/TP40010206-CH1" data-renderer-version="1" target="_self">Configuration Profile Reference</a></span> to learn about the contents of these payloads in detail.)</p><p>In this reference implementation, every device gets the same profile. If desired, however, the <code>Challenge</code> information can be used to identify the user requesting the profile, and the code can generate a profile specific to that user.</p><p>Similarly, the device information provided can be used to generate a profile specific to a given device or a particular type of device (for example, providing a different profile for different iOS-based device models).</p></li><li class="li"><p>The configuration is encrypted with the public key of the device that signed the original request.</p></li><li class="li"><p>The encrypted blob of data is wrapped in a configuration profile.</p></li></ul><p>The details of this encrypted blob are explained in the descriptions of <code>client_cert_configuration_payload</code> (<span class="content_text"><a href="../ConfigurationProfileExamples/ConfigurationProfileExamples.html#//apple_ref/doc/uid/TP40009505-CH4-SW18" data-renderer-version="1">Listing A-1</a></span>) and <code>configuration_payload</code> (<span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW6" data-renderer-version="1">Configuration Profile Payload</a></span>).</p><a name="//apple_ref/doc/uid/TP40009505-CH2-SW29" title="Listing 2-13Handler for /profile URL, part 3 of 7 (revisited)"></a><p class="codesample clear"><strong class="caption_number">Listing 2-13</strong>&nbsp;&nbsp;Handler for <code>/profile</code> URL, part 3 of 7 (revisited)</p><div class="codesample clear"><table><tr><td scope="row"><pre>        else<span></span></pre></td></tr><tr><td scope="row"><pre>            @@issued_first_profile.add(signers[0].serial.to_s)<span></span></pre></td></tr><tr><td scope="row"><pre>            payload = client_cert_configuration_payload(req)<span></span></pre></td></tr><tr><td scope="row"><pre>                        # vpn_configuration_payload(req)<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>            #File.open("payload", "w") { |f| f.write payload }<span></span></pre></td></tr><tr><td scope="row"><pre>            encrypted_profile = OpenSSL::PKCS7.encrypt(p7sign.certificates,<span></span></pre></td></tr><tr><td scope="row"><pre>                payload, OpenSSL::Cipher::Cipher::new("des-ede3-cbc"),<span></span></pre></td></tr><tr><td scope="row"><pre>                OpenSSL::PKCS7::BINARY)<span></span></pre></td></tr><tr><td scope="row"><pre>            configuration = configuration_payload(req, encrypted_profile.to_der)<span></span></pre></td></tr><tr><td scope="row"><pre>        end<span></span></pre></td></tr></table></div></section></section><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW6" title="Configuration Profile Payload"></a><h3 class="jump">Configuration Profile Payload</h3><p>The configuration profile payload (provided by <code>configuration_payload</code>) resembles the profile service payload described in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW4" data-renderer-version="1">Profile Service Payload</a></span>. The only difference is in the payload its carries.</p><p>For a sample profile for this phase, see <span class="content_text"><a href="../ConfigurationProfileExamples/ConfigurationProfileExamples.html#//apple_ref/doc/uid/TP40009505-CH4-SW7" data-renderer-version="1" target="_self">Sample Phase 4 Device Response</a></span>.</p></section><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW7" title="Encryption Certificate Payload"></a><h3 class="jump">Encryption Certificate Payload</h3><p><span class="content_text">Listing 2-14</span> describes the encryption certificate payload. This payload tells the client how to complete the enrollment process.</p>
+
+<a name="//apple_ref/doc/uid/TP40009505-CH2-SW34" title="Listing 2-14encryption_cert_payload function"></a><p class="codesample clear"><strong class="caption_number">Listing 2-14</strong>&nbsp;&nbsp;<code>encryption_cert_payload</code> function</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>def encryption_cert_payload(request, challenge)<span></span></pre></td></tr><tr><td scope="row"><pre>    payload = general_payload()<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadIdentifier'] = "com.acme.encrypted-profile-service"<span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadType'] = "Configuration" # do not modify<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    # strings that show up in UI, customisable<span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadDisplayName'] = "Profile Service Enroll"<span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadDescription'] = "Enrolls identity for the encrypted profile service"<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadContent'] = [scep_cert_payload(request, "Profile Service", challenge)];<span></span></pre></td></tr><tr><td scope="row"><pre>    Plist::Emit.dump(payload)<span></span></pre></td></tr><tr><td scope="row"><pre>end<span></span></pre></td></tr></table></div>
+<p>The <code>scep_cert_payload</code> function is described in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40009505-CH2-SW5" data-renderer-version="1">SCEP Certificate Payload</a></span>.</p></section><section><a name="//apple_ref/doc/uid/TP40009505-CH2-SW5" title="SCEP Certificate Payload"></a><h3 class="jump">SCEP Certificate Payload</h3><p>As the name of the <code>scep_cert_payload</code> function suggests, the function shown in <span class="content_text">Listing 2-15</span> produces an SCEP payload that gives the device the information it needs to enroll a certificate. </p>
+
+<a name="//apple_ref/doc/uid/TP40009505-CH2-SW35" title="Listing 2-15scep_cert_payload function"></a><p class="codesample clear"><strong class="caption_number">Listing 2-15</strong>&nbsp;&nbsp;<code>scep_cert_payload</code> function</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>def scep_cert_payload(request, purpose, challenge)<span></span></pre></td></tr><tr><td scope="row"><pre>    payload = general_payload()<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadIdentifier'] = "com.acme.encryption-cert-request"<span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadType'] = "com.apple.security.scep" # do not modify<span></span></pre></td></tr></table></div>
+
+
+
+<p>The payload type of <code>com.apple.security.scep</code> indicates an SCEP payload and the content specifies the parameters.  </p>
+
+
+<div class="codesample clear"><table><tr><td scope="row"><pre>    # strings that show up in UI, customisable<span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadDisplayName'] = purpose<span></span></pre></td></tr><tr><td scope="row"><pre>    payload['PayloadDescription'] = "Provides device encryption identity"<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    payload_content = Hash.new<span></span></pre></td></tr><tr><td scope="row"><pre>    payload_content['URL'] = "https://" + service_address(request) + "/scep"<span></span></pre></td></tr></table></div>
+
+
+
+<p>First and foremost, there is the base URL for the SCEP service, which for convenience is handled by the sample service as well. It looks a little different for IOS (<code>http://scep-server/cgi-bin/pkiclient.exe</code>) and Windows SCEP servers (<code>http://scep-server/certsrv/mscep/mscep.dll</code>).  </p>
+
+
+<div class="codesample clear"><table><tr><td scope="row"><pre>=begin<span></span></pre></td></tr><tr><td scope="row"><pre>    # scep instance NOTE: required for MS SCEP servers<span></span></pre></td></tr><tr><td scope="row"><pre>    payload_content['Name'] = ""<span></span></pre></td></tr><tr><td scope="row"><pre>=end<span></span></pre></td></tr></table></div>
+
+
+<p>The service can provide different certificate issuing services parameterized on the <code>Name</code> value that becomes part of the final URL. In the case of Windows, this value needs to be set, although any value will do.</p>
+
+
+<div class="codesample clear"><table><tr><td scope="row"><pre>    payload_content['Subject'] = [ [ [ "O", "ACME Inc." ] ],<span></span></pre></td></tr><tr><td scope="row"><pre>        [ [ "CN", purpose + " (" + UUIDTools::UUID.random_create().to_s + ")" ] ] ];<span></span></pre></td></tr><tr><td scope="row"><pre>    if (!challenge.empty?)<span></span></pre></td></tr><tr><td scope="row"><pre>        payload_content['Challenge'] = challenge<span></span></pre></td></tr><tr><td scope="row"><pre>    end<span></span></pre></td></tr></table></div>
+
+
+<p>The subject allows the client to specify the requested subject. In this case, it is populated by the profile service. Some services may not want to grant the client the ability to specify it, and may use the <code>Challenge</code> to encode the identity of the requester.  </p>
+
+<p>X.509 subjects are elaborate structures and are mimicked here as an array of arrays, to fully specify it. Each key-value pair is specified as an array. The key is the first element and is a string with a value that is either an ID (for example, "0.9.2342.19200300.100.1.25" is DC) or one of the recognized abbreviations (CN, C, ST, L, O, OU). The example above represents a subject that will often be displayed as "/O=ACME Inc./CN={purpose} ({random UUID})".</p>
+
+
+<div class="codesample clear"><table><tr><td scope="row"><pre>    payload_content['Keysize'] = 1024<span></span></pre></td></tr></table></div>
+
+
+<p>Next up are some, simple parameters, although they require some consideration. Key size requests the device to generate a keypair of a certain size. Only 1024-bit and 2048-bit key sizes should be used. Keys larger than 2048 bits are not supported. In general, 1024-bit keys are recommended because of the overhead involved in generating 2048-bit keys.</p>
+
+
+<div class="codesample clear"><table><tr><td scope="row"><pre>    payload_content['Key Type'] = "RSA"<span></span></pre></td></tr></table></div>
+
+
+<p>The key type should always be RSA because this reference implementation (and in practice, SCEP) only support RSA keys.</p>
+
+
+<div class="codesample clear"><table><tr><td scope="row"><pre>    payload_content['Key Usage'] = 5 # digital signature (1) | key encipherment (4)<span></span></pre></td></tr></table></div>
+
+
+<p>Key usage specifies the purposes the key can be used for and is a bit mask. Bit 0 (value 1) specifies digital signature, and bit 2 specifies key encipherment. Note that the MS SCEP server will only issue signature or encryption, not both.</p>
+
+
+<div class="codesample clear"><table><tr><td scope="row"><pre>=begin<span></span></pre></td></tr><tr><td scope="row"><pre>    payload_content['CAFingerprint'] = StringIO.new(OpenSSL::Digest::SHA1.new(@@root_cert.to_der).digest)<span></span></pre></td></tr><tr><td scope="row"><pre>=end<span></span></pre></td></tr></table></div>
+
+
+<p>SCEP can run over HTTP, as long as the CA cert is verified out of band. This functionality is currently disabled (as shown above) because iOS does not currently support this. This function supports such operation by adding the fingerprint to the SCEP payload that the phone downloads over HTTPS during enrollment, as shown below:</p>
+
+
+<div class="codesample clear"><table><tr><td scope="row"><pre>    payload['PayloadContent'] = payload_content;<span></span></pre></td></tr><tr><td scope="row"><pre>    payload<span></span></pre></td></tr><tr><td scope="row"><pre>end<span></span></pre></td></tr></table></div>
+
+
+<p></p>
+
+
+<div class="codesample clear"><table><tr><td scope="row"><pre>            payload = client_cert_configuration_payload(req)<span></span></pre></td></tr><tr><td scope="row"><pre>                        # vpn_configuration_payload(req)<span></span></pre></td></tr></table></div>
+
+
+<p></p></section>
+
+</section>
+
+
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../ConfigurationProfileExamples/ConfigurationProfileExamples.html'>Next</a><a class='previousLink' rel='prev' href='../OTASecurity/OTASecurity.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2018 Apple Inc. All Rights Reserved.  <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2018-04-09</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1282/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1282/JavaScript/library.js"></script>
+</body>
+</html>
